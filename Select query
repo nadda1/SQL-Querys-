@@ -1,0 +1,10 @@
+/*
+Enter your query here.
+*/
+select Company.company_code , founder , count(DISTINCT lead_manager_code) ,count(DISTINCT senior_manager_code) ,count(DISTINCT manager_code) , count(DISTINCT employee_code) 
+from Company LEFT JOIN Employee ON Company.company_code =Employee.company_code
+GROUP BY 
+    Company.company_code, Company.founder
+order by company_code ASC
+
+ 
