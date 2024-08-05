@@ -1,0 +1,28 @@
+/*
+Enter your query here.
+*/
+WITH cte_challenges AS (
+    SELECT h.hacker_id, h.name, COUNT(c.challenge_id) AS n
+    FROM Hackers h
+    JOIN Challenges c ON h.hacker_id = c.hacker_id
+    GROUP BY h.hacker_id, h.name
+), 
+cte_max AS (
+    SELECT MAX(n) AS max_challenges
+    FROM cte_challenges
+),
+cte_counts AS (
+    SELECT n
+    FROM cte_challenges
+    WHERE n < (SELECT max_challenges FROM cte_max)
+    GROUP BY n
+    HAVING COUNT(*) > 1
+)
+
+SELECT cte_challenges.hacker_id, cte_challenges.name, cte_challenges.n
+FROM cte_challenges
+LEFT JOIN cte_counts ON cte_challenges.n = cte_counts.n
+WHERE cte_counts.n IS NULL
+ORDER BY cte_challenges.n DESC, cte_challenges.hacker_id ASC;
+
+ 
