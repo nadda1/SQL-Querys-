@@ -1,0 +1,7 @@
+# Write a query to find the maximum total earnings for all employees as well as the total number of employees
+SELECT  MAX(total) ,COUNT(employee_id)
+FROM (
+    SELECT employee_id, (salary * months) AS total
+    FROM Employee
+) AS subquery
+where  total = (select MAX(salary * months) from Employee) 
