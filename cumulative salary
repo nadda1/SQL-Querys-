@@ -1,0 +1,7 @@
+# Write a query to find the cumulative salary of employees department-wise, who have joined the company in the last 30 days.
+
+SELECT Dept, 
+       SUM(Salary) AS CumulativeSalary
+FROM Employee
+WHERE JoinDate >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
+GROUP BY Dept;
