@@ -1,0 +1,15 @@
+WITH CTE AS (
+    SELECT s.Name, s.ID, p.Salary, f.Friend_ID
+    FROM Students s
+    JOIN Friends f ON s.ID = f.ID
+    JOIN Packages p ON s.ID = p.ID
+), 
+CTE2 AS (
+    SELECT c1.Name 
+    FROM CTE c1
+    JOIN CTE c2 ON c1.Friend_ID = c2.ID 
+    WHERE c2.Salary > c1.Salary
+    order by c2.Salary
+)
+SELECT * FROM CTE2 ;
+ 
