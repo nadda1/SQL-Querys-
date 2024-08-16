@@ -1,0 +1,20 @@
+#If the End_Date of the tasks are consecutive, then they are part of the same project. we are interested in finding the total number of different projects completed. 
+WITH CTE1 AS (
+    SELECT Start_Date, ROW_NUMBER() OVER (ORDER BY Start_Date) AS index1
+    FROM Projects
+    WHERE Start_Date NOT IN (
+        SELECT End_Date FROM Projects
+    )
+), 
+CTE2 AS (
+    SELECT End_Date, ROW_NUMBER() OVER (ORDER BY End_Date) AS index2
+    FROM Projects
+    WHERE End_Date NOT IN (
+        SELECT Start_Date FROM Projects
+    )
+)
+SELECT Start_Date, End_Date
+FROM CTE1
+JOIN CTE2 ON CTE1.index1 = CTE2.index2
+ORDER BY DATEDIFF(End_Date, Start_Date), Start_Date;
+ 
