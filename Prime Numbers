@@ -1,0 +1,20 @@
+/*
+Enter your query here.
+*/
+SET @start := 1, @finish := 1000;
+
+WITH RECURSIVE sequence AS (
+    SELECT @start AS num
+    UNION ALL
+    SELECT num + 1 
+    FROM sequence
+    WHERE num + 1 <= @finish
+)
+SELECT GROUP_CONCAT(num SEPARATOR '&')
+FROM sequence AS s1
+WHERE num > 1 AND NOT EXISTS (
+    SELECT 1
+    FROM sequence AS s2
+    WHERE s2.num > 1 AND s2.num < s1.num AND s1.num % s2.num = 0
+);
+
