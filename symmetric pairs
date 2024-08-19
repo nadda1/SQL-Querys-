@@ -1,0 +1,14 @@
+WITH base AS (
+    SELECT
+        X,
+        Y,
+        ROW_NUMBER() OVER(ORDER BY X) as i
+    FROM Functions
+)
+SELECT DISTINCT
+    b1.X,
+    b1.Y
+FROM base b1 JOIN base b2 ON b1.X = b2.Y AND b1.Y = b2.X
+WHERE b1.X <= b1.Y
+    AND b1.i != b2.i
+ORDER BY b1.X
