@@ -1,0 +1,26 @@
+DELIMITER $$
+
+CREATE PROCEDURE Draw(IN n INT)
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    DECLARE j INT;
+    DECLARE result VARCHAR(255);
+    
+    WHILE i <= n DO
+        SET result = '';
+        SET j = 1;
+        
+        WHILE j <= i DO
+            SET result = CONCAT(result, '* ');
+            SET j = j + 1;
+        END WHILE;
+        
+    
+        SELECT result; 
+        
+        SET i = i + 1;
+    END WHILE;
+END $$
+
+DELIMITER ;
+CALL Draw(20);
